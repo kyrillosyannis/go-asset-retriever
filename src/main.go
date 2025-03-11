@@ -41,6 +41,9 @@ func main() {
 	r.GET("/message", chartController.GetMessageHandler)
 	r.GET("/charts", chartController.GetAllCharts)
 	r.GET("/users/:userId/favourites", favouriteController.GetFavouritesByUser)
+	r.POST("/users/:userId/favourites/:assetId", favouriteController.AddToFavourites)
+	//DELETE "/users/:userId/favourites/:favouriteId"
+	//PATCH "/assets/:assetId" 
 
 	// Start server
 	r.Run(":8081") // Runs on http://localhost:8081

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"fmt"
+	"go.challenge/models/domain"
 	"go.challenge/models/dto"
 	"go.challenge/repository"
 )
@@ -19,8 +19,13 @@ func (s *FavouriteService) GetFavouritesByUser() ([]dto.FavouriteDto, error) {
 	if err != nil {
 		return nil, err
 	}
-
-    fmt.Println(items)
-
 	return items, nil
+}
+
+func (s *FavouriteService) AddToFavourites(assetId int64, userId int64) {
+	newFavourite := domain.Favourite{
+		UserId: userId,
+		AssetId: assetId,
+	}
+	s.repo.AddToFavourites(&newFavourite)
 }

@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"go.challenge/models/domain"
 	"go.challenge/models/dto"
 	"gorm.io/gorm"
 )
@@ -37,4 +38,8 @@ func (r *FavouriteRepository) FindFavouritesByUser(userId int64) ([]dto.Favourit
 		Where("f.user_id = ?", userId).
 		Scan(&favourites).Error
 		return favourites, err
+}
+
+func (r *FavouriteRepository) AddToFavourites(fav *domain.Favourite) {
+	r.db.Create(fav)
 }

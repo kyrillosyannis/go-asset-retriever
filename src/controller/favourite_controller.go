@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"go.challenge/service"
@@ -22,4 +23,15 @@ func (c *FavouriteController) GetFavouritesByUser(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, charts)
+}
+
+func (c *FavouriteController) AddToFavourites(ctx *gin.Context) {
+	userIdStr := ctx.Param("userId")
+	assetIdStr := ctx.Param("assetId")
+	assetId, err := strconv.ParseInt(assetIdStr, 10, 64)
+	userId, err2 := strconv.ParseInt(userIdStr, 10, 64)
+	if (err != nil || err2 != nil) {
+		return //TODO add an informative message about the error
+	}
+	c.service.AddToFavourites(assetId, userId)
 }
