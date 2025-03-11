@@ -29,3 +29,7 @@ func (s *FavouriteService) AddToFavourites(assetId int64, userId int64) {
 	}
 	s.repo.AddToFavourites(&newFavourite)
 }
+
+func (s *FavouriteService) RemoveFromFavourites(favId int64) error {
+	return s.repo.RemoveFromFavourites(favId)
+}

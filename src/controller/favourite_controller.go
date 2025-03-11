@@ -35,3 +35,18 @@ func (c *FavouriteController) AddToFavourites(ctx *gin.Context) {
 	}
 	c.service.AddToFavourites(assetId, userId)
 }
+
+func (c *FavouriteController) RemoveFromFavourites(ctx *gin.Context) {
+	favIdStr := ctx.Param("favouriteId")
+	favId, err := strconv.ParseInt(favIdStr, 10, 64)
+	if (err != nil) {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	err = c.service.RemoveFromFavourites(favId)
+	if (err != nil) {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusNoContent, nil)
+}

@@ -42,7 +42,7 @@ func main() {
 	r.GET("/charts", chartController.GetAllCharts)
 	r.GET("/users/:userId/favourites", favouriteController.GetFavouritesByUser)
 	r.POST("/users/:userId/favourites/:assetId", favouriteController.AddToFavourites)
-	//DELETE "/users/:userId/favourites/:favouriteId"
+	r.DELETE("/users/:userId/favourites/:favouriteId", favouriteController.RemoveFromFavourites)
 	//PATCH "/assets/:assetId" 
 
 	// Start server

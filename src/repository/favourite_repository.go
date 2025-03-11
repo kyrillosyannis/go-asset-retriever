@@ -43,3 +43,11 @@ func (r *FavouriteRepository) FindFavouritesByUser(userId int64) ([]dto.Favourit
 func (r *FavouriteRepository) AddToFavourites(fav *domain.Favourite) {
 	r.db.Create(fav)
 }
+
+func (r * FavouriteRepository) RemoveFromFavourites(favId int64) error {
+	err := r.db.Delete(&domain.Favourite{}, favId).Error
+	if (err != nil) {
+		return err
+	}
+	return nil
+}
