@@ -12,5 +12,5 @@ type Chart struct {
 	CreationDate time.Time `gorm:"column:creation_date"`
 	UpdateDate 	 time.Time `gorm:"column:update_date"`
 	AssetId int64 `gorm:"column:asset_id;uniqueIndex"`
-	Asset Asset `gorm:"foreignKey:AssetID"`
+	Asset Asset `gorm:"foreignKey:AssetId"`
 }

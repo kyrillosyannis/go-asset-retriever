@@ -8,5 +8,5 @@ type Audience struct {
 	DailyHoursOnSocialMedia int16 `gorm:"column:daily_hours_on_social_media"`
 	LastMonthNumberOfPurchases int `gorm:"column:last_month_number_of_purchases"`
 	AssetId int64 `gorm:"column:asset_id;uniqueIndex"`
-	Asset Asset `gorm:"foreignKey:AssetID"`
+	Asset Asset `gorm:"foreignKey:AssetId"`
 }
