@@ -35,7 +35,9 @@ func main() {
 	favouriteRepository := repository.NewFavouriteRepository(db)
 	favouriteService := service.NewFavouriteService(favouriteRepository)
 	favouriteController := controller.NewFavouriteController(favouriteService)
-
+	assetRepository := repository.NewAssetRepository(db)
+	assetService := service.NewAssetService(assetRepository)
+	assetController := controller.NewAssetController(assetService)
 
 	// Define endpoint
 	r.GET("/message", chartController.GetMessageHandler)
@@ -43,7 +45,7 @@ func main() {
 	r.GET("/users/:userId/favourites", favouriteController.GetFavouritesByUser)
 	r.POST("/users/:userId/favourites/:assetId", favouriteController.AddToFavourites)
 	r.DELETE("/users/:userId/favourites/:favouriteId", favouriteController.RemoveFromFavourites)
-	//PATCH "/assets/:assetId" 
+	r.PATCH("/assets/:assetId", assetController.UpdateDescription)
 
 	// Start server
 	r.Run(":8081") // Runs on http://localhost:8081
