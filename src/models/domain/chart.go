@@ -4,7 +4,7 @@ import "time"
 
 type Chart struct {
 	Id           int64 `gorm:"primaryKey"`
-	Title        string `gorm:"column:titie"`
+	Title        string `gorm:"column:title"`
 	XAxisTitle   string `gorm:"column:x_title"`
 	YAxisTitle   string	`gorm:"column:y_title"`
 	XCoordinate  float64 `gorm:"column:x_coord"`

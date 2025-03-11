@@ -32,10 +32,15 @@ func main() {
 	chartRepository := repository.NewChartRepository(db)
 	chartService := service.NewChartService(chartRepository)
 	chartController := controller.NewChartController(chartService)
+	favouriteRepository := repository.NewFavouriteRepository(db)
+	favouriteService := service.NewFavouriteService(favouriteRepository)
+	favouriteController := controller.NewFavouriteController(favouriteService)
+
 
 	// Define endpoint
 	r.GET("/message", chartController.GetMessageHandler)
 	r.GET("/charts", chartController.GetAllCharts)
+	r.GET("/users/:userId/favourites", favouriteController.GetFavouritesByUser)
 
 	// Start server
 	r.Run(":8081") // Runs on http://localhost:8081

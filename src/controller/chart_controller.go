@@ -22,3 +22,12 @@ func (c *ChartController) GetMessageHandler(ctx *gin.Context) {
 	message := c.service.GetMessage()
 	ctx.JSON(http.StatusOK, gin.H{"message": message})
 }
+
+func (c *ChartController) GetAllCharts(ctx *gin.Context) {
+	charts, err := c.service.GetAllCharts()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, charts)
+}
