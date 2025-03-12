@@ -12,6 +12,6 @@ For now, only the database is in the docker container.
 Database migrations are handled with Flyway.
 
 # TODO 
--Implement JWT auth
 -Add unit tests for the service layer
 -Add pagination
+-review int64 data types and convert to unsigned
