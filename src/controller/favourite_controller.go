@@ -17,8 +17,10 @@ func NewFavouriteController(ser *service.FavouriteService) *FavouriteController 
 }
 
 func (c *FavouriteController) GetFavouritesByUser(ctx *gin.Context) {
-	charts, err := c.service.GetFavouritesByUser()
-	if err != nil {
+	userIdStr := ctx.Param("userId")
+	userId, err := strconv.ParseInt(userIdStr, 10, 64)
+	charts, err2 := c.service.GetFavouritesByUser(userId)
+	if (err != nil || err2!= nil) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
