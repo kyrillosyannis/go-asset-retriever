@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -13,12 +14,19 @@ import (
 var DB *gorm.DB
 
 func ConnectDatabase() (*gorm.DB, error) {
-	host := "localhost"
-	port := "5434"
-	user := "postgres"
-	password := "postgres"
-	dbname := "asset_db"
-	sslmode := "disable"
+	viper.SetConfigName("config")
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./config")
+	err := viper.ReadInConfig()
+	if err != nil {
+		panic(fmt.Errorf("fatal error config file: %w", err))
+	}
+	host := viper.GetString("DATABASE_HOST")
+	port := viper.GetString("DATABASE_PORT")
+	user := viper.GetString("DATABASE_USERNAME")
+	password := viper.GetString("DATABASE_PASSWORD")
+	dbname := viper.GetString("DATABASE_NAME")
+	sslmode := viper.GetString("DATABASE_SSL_MODE")
 
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		host, port, user, password, dbname, sslmode)
