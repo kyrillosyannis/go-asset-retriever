@@ -25,10 +25,8 @@ func main() {
 	if err != nil {
 		fmt.Printf("Failed to connect to database: %v", err)
 	}
-	// Initialize Gin
 	r := gin.Default()
 
-	// Initialize service and controller
 	chartRepository := repository.NewChartRepository(db)
 	chartService := service.NewChartService(chartRepository)
 	chartController := controller.NewChartController(chartService)
@@ -39,7 +37,6 @@ func main() {
 	assetService := service.NewAssetService(assetRepository)
 	assetController := controller.NewAssetController(assetService)
 
-	// Define endpoint
 	r.GET("/message", chartController.GetMessageHandler)
 	r.GET("/charts", chartController.GetAllCharts)
 	r.GET("/users/:userId/favourites", favouriteController.GetFavouritesByUser)
@@ -47,6 +44,15 @@ func main() {
 	r.DELETE("/users/:userId/favourites/:favouriteId", favouriteController.RemoveFromFavourites)
 	r.PATCH("/assets/:assetId", assetController.UpdateDescription)
 
-	// Start server
-	r.Run(":8081") // Runs on http://localhost:8081
+	r.GET("/health", func(c *gin.Context) {
+    sqlDB, _ := db.DB()
+    err := sqlDB.Ping()
+    if err != nil {
+        c.JSON(500, gin.H{"status": "database_down"})
+        return
+    }
+    c.JSON(200, gin.H{"status": "up"})
+	})
+
+	r.Run(":8081") 
 }

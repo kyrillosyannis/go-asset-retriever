@@ -14,8 +14,8 @@ func NewFavouriteService(repo *repository.FavouriteRepository) *FavouriteService
 	return &FavouriteService{repo: repo}
 }
 
-func (s *FavouriteService) GetFavouritesByUser() ([]dto.FavouriteDto, error) {
-	items, err := s.repo.FindFavouritesByUser(1)
+func (s *FavouriteService) GetFavouritesByUser(userId int64) ([]dto.FavouriteDto, error) {
+	items, err := s.repo.FindFavouritesByUser(userId)
 	if err != nil {
 		return nil, err
 	}

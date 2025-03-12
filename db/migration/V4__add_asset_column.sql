@@ -1,0 +1,1 @@
+alter table assets add column type varchar(30);
