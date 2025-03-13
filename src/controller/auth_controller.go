@@ -27,5 +27,5 @@ func (ctrl *AuthController) Login(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Bad credentials"})
 		return
 	}
-	ctx.JSON(http.StatusOK, gin.H{"j": jwt})
+	ctx.JSON(http.StatusOK, gin.H{"jwt": jwt})
 }
