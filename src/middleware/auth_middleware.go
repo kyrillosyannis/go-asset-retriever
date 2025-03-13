@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"go.challenge/utils"
 )
 
@@ -17,20 +17,25 @@ func Authenticate(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
-	token := header[len("Bearer "):]
-	claims, err := utils.VerifyJWT(token)
+	tokenString := header[len("Bearer "):]
+	token, err := utils.VerifyJWT(tokenString)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
 		ctx.Abort()
 		return
 	}
-	subject, err := claims.Claims.GetSubject()
-	if err != nil {
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if (!ok || !token.Valid) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
 		ctx.Abort()
 		return
 	}
-	fmt.Println(subject)
-	ctx.Set("username", subject)
+	username, exists := claims["username"]
+	if (!exists) {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "invalid token"})
+		ctx.Abort()
+		return
+	}
+	ctx.Set("username", username)
 	ctx.Next()
 }
