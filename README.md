@@ -1,8 +1,8 @@
 # GlobalWebIndex Engineering Challenge
 
 # REST API
-The implementation consists of a single REST API that for now is not in the docker-compose,
-so it will need to be executed with go run main.go
+The implementation consists of a single REST API.
+
 The project structure follows a layered architecture with controller, service & repository
 
 # Security
@@ -16,7 +16,7 @@ which can be obtained from /authenticate with the following request body:
 ```
 
 # Docker
-For now, only the database is in the docker container.
+Database and go app are in a docker-compose file.
 
 # DB Migrations
 Database migrations are handled with Flyway.
